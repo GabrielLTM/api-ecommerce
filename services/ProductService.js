@@ -3,7 +3,8 @@ import {
     findAllProducts,
     findProductById,
     updateProduct,
-    deleteProduct
+    deleteProduct,
+    findProductByName
 } from "../repository/ProductRepository.js";
 
 class ProductError extends Error {
@@ -13,7 +14,7 @@ class ProductError extends Error {
     }
 }
 
-export const createProduct = async (product) => {
+export const create = async (product) => {
     const existingProduct = await findProductByName(product.name);
     if (existingProduct) {
         throw new ProductError('Product name already registered');
@@ -37,7 +38,7 @@ export const getProductById = async (id) => {
     return product;
 }
 
-export const updateProduct = async (id, product) => {
+export const updateProductById = async (id, product) => {
     if (id == null || id == 0) {
         throw new ProductError('Invalid product ID', 400);
     }
@@ -48,7 +49,7 @@ export const updateProduct = async (id, product) => {
     return await updateProduct(id, product);
 }
 
-export const deleteProduct = async (id) => {
+export const deleteProductById = async (id) => {
     if (id == null || id == 0) {
         throw new ProductError('Invalid product ID', 400);
     }

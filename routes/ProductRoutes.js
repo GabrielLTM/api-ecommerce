@@ -2,7 +2,7 @@ import { Router } from 'express';
 import {
     createProduct,
     getProducts,
-    getProductById,
+    getProduct,
     updateProduct,
     deleteProduct
 } from '../controller/ProductController.js';
@@ -13,7 +13,7 @@ const router = Router();
 
 router.post('/', adminMiddleware, createProduct);
 router.get('/', authMiddleware, getProducts);
-router.get('/:id', authMiddleware, getProductById);
+router.get('/:id', authMiddleware, getProduct);
 router.put('/:id', adminMiddleware, updateProduct);
 router.delete('/:id', adminMiddleware, deleteProduct);
 

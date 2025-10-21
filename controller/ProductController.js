@@ -1,9 +1,9 @@
 import {
-    createProduct as createProductService,
+    create as createProductService,
     getAllProducts as getAllProductsService,
     getProductById as getProductByIdService,
-    updateProduct as updateProductService,
-    deleteProduct as deleteProductService
+    updateProductById as updateProductService,
+    deleteProductById as deleteProductService
 } from "../services/ProductService.js";
 
 export const createProduct = async (req, res) => {
@@ -29,7 +29,7 @@ export const getProducts = async (req, res) => {
     }
 }
 
-export const getProductById = async (req, res) => {
+export const getProduct = async (req, res) => {
     const { id } = req.params;
     try {
         const product = await getProductByIdService(id);

@@ -1,11 +1,11 @@
-import { orders, orderItems, products, clients } from '../../database/index.js';
+import { orders, orderItems, products, clients } from '../database/index.js';
 
 let orderIdCounter = 1;
 let orderItemIdCounter = 1;
 
 export const saveOrder = async (orderData) => {
     const newOrder = {
-        id: orderIdCounter++.toString(),
+        id: (orderIdCounter++).toString(),
         clientId: orderData.clientId,
         paymentMethod: orderData.paymentMethod,
         status: 'PENDING',
@@ -15,7 +15,7 @@ export const saveOrder = async (orderData) => {
 
     const newOrderItems = orderData.items.map(item => {
         const newOrderItem = {
-            id: orderItemIdCounter++.toString(),
+            id: (orderItemIdCounter++).toString(),
             orderId: newOrder.id,
             productId: item.productId,
             quantity: item.quantity,
