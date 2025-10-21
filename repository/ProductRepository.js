@@ -1,4 +1,4 @@
-import { products } from '../../database/index.js';
+import { products } from '../database/index.js';
 
 let idCounter = 1;
 
@@ -6,12 +6,16 @@ export const findProductById = async (id) => {
     return products.find(product => product.id === id);
 }
 
+export const findProductByName = async (name) => {
+    return products.find(product => product.name === name);
+}
+
 export const findAllProducts = async () => {
     return products;
 }
 
 export const saveProduct = async (product) => {
-    const newProduct = { ...product, id: idCounter++.toString() };
+    const newProduct = { ...product, id: (idCounter++).toString() };
     products.push(newProduct);
     return newProduct;
 }

@@ -1,4 +1,4 @@
-import { saveBrand, getAllBrands, getBrandById } from "../services/BrandService.js";
+import { createBrand, getAllBrands, getBrandById } from "../services/BrandService.js";
 
 export const postBrand = async (req, res) => {
   try {
@@ -10,7 +10,7 @@ export const postBrand = async (req, res) => {
       return res.status(400).json({ message: "Os campos 'name' e 'urlLogo' são obrigatórios." });
     }
 
-    const newBrand = await saveBrand(name, urlLogo);
+    const newBrand = await createBrand(name, urlLogo);
 
     res.json(newBrand);
     }
@@ -30,7 +30,7 @@ export const getBrands = async (req, res) => {
   }
 };
 
-export const getBrandById = async (req, res) => {
+export const getBrand = async (req, res) => {
   const { id } = req.params;
   try {
     const brand = await getBrandById(parseInt(id));

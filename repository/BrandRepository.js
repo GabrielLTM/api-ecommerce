@@ -1,9 +1,9 @@
-import { brands } from '../../database/index.js';
+import { brands } from '../database/index.js';
 
 let idCounter = 1;
 
 export const saveBrand = async (name, urlLogo) => {
-    const newBrand = { id: idCounter++.toString(), name, urlLogo };
+    const newBrand = { id: (idCounter++).toString(), name, urlLogo };
     brands.push(newBrand);
     return newBrand;
 }

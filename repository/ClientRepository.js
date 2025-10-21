@@ -1,9 +1,9 @@
-import { clients } from '../../database/index.js';
+import { clients } from '../database/index.js';
 
 let idCounter = 1;
 
 export const saveClient = async (client) => {
-    const newClient = { ...client, id: idCounter++.toString() };
+    const newClient = { ...client, id: (idCounter++).toString() };
     clients.push(newClient);
     return newClient;
 }

@@ -1,4 +1,4 @@
-import { saveBrand, findBrandByName, findAllBrands, findBrandById } from "../repository/BrandRepository";
+import { saveBrand, findBrandByName, findAllBrands, findBrandById } from "../repository/BrandRepository.js";
 
 class BrandError extends Error {
   constructor(message, status) {

@@ -38,7 +38,7 @@ export const loginUser = async (email, password) => {
 };
 
 function generateToken(user) {
-  return jwt.sign({ id: user.id }, 'your-secret-key', {
+  return jwt.sign({ id: user.id, role: user.role }, process.env.JWT_SECRET, {
     expiresIn: '1h'
   });
 }

@@ -1,4 +1,4 @@
-import { users } from '../../database/index.js';
+import { users } from '../database/index.js';
 
 export const getUser = async (userId) => {
   const user = users.find(u => u.id === userId);

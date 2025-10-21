@@ -7,13 +7,14 @@ import {
     deleteClient
 } from '../controller/ClientController.js';
 import { authMiddleware } from '../middleware/AuthMiddleware.js';
+import { adminMiddleware } from '../middleware/AdminMiddleware.js';
 
 const router = Router();
 
-router.post('/', authMiddleware, createClient);
+router.post('/', adminMiddleware, createClient);
 router.get('/', authMiddleware, getClients);
 router.get('/:id', authMiddleware, getClientById);
-router.put('/:id', authMiddleware, updateClient);
-router.delete('/:id', authMiddleware, deleteClient);
+router.put('/:id', adminMiddleware, updateClient);
+router.delete('/:id', adminMiddleware, deleteClient);
 
 export default router;
