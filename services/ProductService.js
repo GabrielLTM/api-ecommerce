@@ -7,6 +7,8 @@ import {
     findProductByName
 } from "../repository/ProductRepository.js";
 
+import { findBrandById } from "../repository/BrandRepository.js";
+
 class ProductError extends Error {
     constructor(message, status) {
         super(message);
@@ -18,6 +20,11 @@ export const create = async (product) => {
     const existingProduct = await findProductByName(product.name);
     if (existingProduct) {
         throw new ProductError('Product name already registered');
+    }
+    
+    const brand = await findBrandById(product.brandId);
+    if (!brand) {
+        throw new ProductError('Brand not found for the given brandId', 400);
     }
     const newProduct = await saveProduct(product);
     return newProduct;

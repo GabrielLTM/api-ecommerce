@@ -23,6 +23,12 @@ export const createOrder = async (orderData) => {
         total += product.price * item.quantity;
     }
 
+    const validPaymentMethods = ['CREDIT_CARD', 'DEBIT_CARD', 'CASH'];
+
+    if (!validPaymentMethods.includes(orderData.paymentMethod)) {
+        throw new OrderError(`Invalid payment method. Valid methods are: ${validPaymentMethods.join(', ')}`, 400);
+    }
+
     const orderToSave = {
         ...orderData,
         total: total
