@@ -9,6 +9,7 @@ export const saveBrand = async (name, urlLogo) => {
 }
 
 export const findBrandById = async (id) => {
+    console.log("Finding brand by ID: ", id);
     return brands.find(brand => brand.id === id);
 }
 

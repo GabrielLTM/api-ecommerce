@@ -33,7 +33,7 @@ export const getBrands = async (req, res) => {
 export const getBrand = async (req, res) => {
   const { id } = req.params;
   try {
-    const brand = await getBrandById(parseInt(id));
+    const brand = await getBrandById(id);
     if (!brand) return res.status(404).json({ message: 'Marca não encontrada' });
     res.status(200).json(brand);
   } catch (err) {
