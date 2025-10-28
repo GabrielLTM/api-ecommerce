@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { postBrand, getBrand, getBrands,  } from '../controller/BrandController.js';
+import { postBrand, getBrand, getBrands, putBrand, deleteBrand  } from '../controller/BrandController.js';
 import { authMiddleware } from '../middleware/AuthMiddleware.js';
 import { adminMiddleware } from '../middleware/AdminMiddleware.js';
 

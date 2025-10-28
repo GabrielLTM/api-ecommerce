@@ -1,4 +1,4 @@
-import { createBrand, getAllBrands, getBrandById, updateBrand, deleteBrand } from "../services/BrandService.js";
+import { createBrand, getAllBrands, getBrandById, updateBrand, removeBrand } from "../services/BrandService.js";
 
 export const postBrand = async (req, res) => {
   try {
