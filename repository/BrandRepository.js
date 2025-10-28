@@ -21,3 +21,20 @@ export const findBrandByName = async (name) => {
     return brands.find(brand => brand.name === name);
 }
  
+export const updateBrandById = async (id, brand) => {
+    const index = brands.findIndex(b => b.id === id);
+    if (index !== -1) {
+        brands[index] = { ...brands[index], ...brand };
+        return brands[index];
+    }
+    return null;
+}
+
+export const deleteBrandById = async (id) => {
+    const index = brands.findIndex(b => b.id === id);
+    if (index !== -1) {
+        const deletedBrand = brands.splice(index, 1);
+        return deletedBrand[0];
+    }
+    return null;
+}   

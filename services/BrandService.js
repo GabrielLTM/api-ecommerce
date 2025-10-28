@@ -1,4 +1,4 @@
-import { saveBrand, findBrandByName, findAllBrands, findBrandById } from "../repository/BrandRepository.js";
+import { saveBrand, findBrandByName, findAllBrands, findBrandById, deleteBrandById, updateBrandById } from "../repository/BrandRepository.js";
 
 class BrandError extends Error {
   constructor(message, status) {
@@ -16,6 +16,27 @@ export const createBrand = async (name, urlLogo) => {
     }
     const newBrand = await saveBrand(name, urlLogo);
     return newBrand;
+}
+
+export const updateBrand = async (id, name, urlLogo) => {
+    const brand = await findBrandById(id);
+    if (!brand) {
+        return null;
+    }
+    brand.name = name || brand.name;
+    brand.urlLogo = urlLogo || brand.urlLogo;
+
+    const updatedBrand = await updateBrandById(id, brand);
+    return updatedBrand;
+}
+
+export const removeBrand = async (id) => {
+    const brand = await findBrandById(id);
+    if (!brand) {
+        return null;
+    }
+    await deleteBrandById(id);
+    return brand;
 }
 
 export const getAllBrands = async () => {

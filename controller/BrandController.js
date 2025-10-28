@@ -1,4 +1,4 @@
-import { createBrand, getAllBrands, getBrandById } from "../services/BrandService.js";
+import { createBrand, getAllBrands, getBrandById, updateBrand, deleteBrand } from "../services/BrandService.js";
 
 export const postBrand = async (req, res) => {
   try {
@@ -17,6 +17,37 @@ export const postBrand = async (req, res) => {
      catch (err) {
     console.log("Erro ao cadastrar a marca: ", err)
     res.status(500).json({ message: 'Erro ao cadastrar a marca' });
+  }
+}
+
+export const putBrand = async (req, res) => {
+  const { id } = req.params;
+  const { name, urlLogo } = req.body;
+
+  try {
+    const updatedBrand = await updateBrand(id, name, urlLogo);
+    if (!updatedBrand) {
+      return res.status(404).json({ message: 'Marca não encontrada' });
+    }
+    res.status(200).json(updatedBrand);
+  } catch (err) {
+    console.log("Erro ao atualizar a marca: ", err)
+    res.status(500).json({ message: 'Erro ao atualizar a marca' });
+  }
+}
+
+export const deleteBrand = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const deleted = await removeBrand(id);
+    if (!deleted) {
+      return res.status(404).json({ message: 'Marca não encontrada' });
+    }
+    res.status(200).json({ message: 'Marca deletada com sucesso' });
+  } catch (err) {
+    console.log("Erro ao deletar a marca: ", err)
+    res.status(500).json({ message: 'Erro ao deletar a marca' });
   }
 }
 
