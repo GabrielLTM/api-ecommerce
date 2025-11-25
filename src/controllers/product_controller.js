@@ -3,8 +3,8 @@ import {
     getAllProducts as getAllProductsService,
     getProductById as getProductByIdService,
     updateProductById as updateProductService,
-    deleteProductById as deleteProductService
-} from "../services/ProductService.js";
+    deleteProductById as deleteProductService,
+} from "../services/product_service.js";
 
 export const createProduct = async (req, res) => {
     try {

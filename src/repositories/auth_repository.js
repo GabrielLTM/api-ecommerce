@@ -1,6 +1,6 @@
 import { users } from '../database/index.js';
 
-let idCounter = 1;
+let idCounter = users.length > 0 ? Math.max(...users.map(u => parseInt(u.id))) + 1 : 1;
 
 class CustomError extends Error {
   constructor(message, status) {

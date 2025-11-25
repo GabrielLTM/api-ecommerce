@@ -1,4 +1,4 @@
-import { getUser } from '../repository/UserRepository.js';
+import { getUser, getAllUsers } from '../repositories/user_repository.js';
 
 class UserError extends Error {
   constructor(message, status) {
@@ -12,4 +12,8 @@ export const getUserProfile = async (userId) => {
         throw new UserError('ID do usuário inválido', 400);
     } 
   return getUser(userId);
+}
+
+export const getAll = async () => {
+    return getAllUsers();
 }

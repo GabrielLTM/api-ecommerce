@@ -4,7 +4,7 @@ import {
     getClientById as getClientByIdService,
     updateClient as updateClientService,
     deleteClient as deleteClientService
-} from "../services/ClientService.js";
+} from "../services/client_service.js";
 
 export const createClient = async (req, res) => {
     try {

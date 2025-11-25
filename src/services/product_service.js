@@ -5,9 +5,10 @@ import {
     updateProduct,
     deleteProduct,
     findProductByName
-} from "../repository/ProductRepository.js";
+} from "../repositories/product_repository.js";
 
-import { findBrandById } from "../repository/BrandRepository.js";
+import { findBrandById } from "../repositories/brand_repository.js";
+import { buscarPorId as findFornecedorById } from "../repositories/fornecedor_repository.js";
 
 class ProductError extends Error {
     constructor(message, status) {
@@ -66,3 +67,4 @@ export const deleteProductById = async (id) => {
     }
     return await deleteProduct(id);
 }
+

@@ -5,9 +5,9 @@ import {
     getClientById,
     updateClient,
     deleteClient
-} from '../controller/ClientController.js';
-import { authMiddleware } from '../middleware/AuthMiddleware.js';
-import { adminMiddleware } from '../middleware/AdminMiddleware.js';
+} from '../controllers/client_controller.js';
+import { authMiddleware } from '../middlewares/auth_middleware.js';
+import { adminMiddleware } from '../middlewares/admin_middleware.js';
 
 const router = Router();
 

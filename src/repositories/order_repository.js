@@ -63,3 +63,17 @@ export const updateOrderStatus = async (id, status) => {
     }
     return null;
 }
+
+export const deleteOrder = async (id) => {
+    const index = orders.findIndex(o => o.id === id);
+    if (index !== -1) {
+        const deletedOrder = orders.splice(index, 1);
+        for (let i = orderItems.length - 1; i >= 0; i--) {
+            if (orderItems[i].orderId === id) {
+                orderItems.splice(i, 1);
+            }
+        }
+        return deletedOrder[0];
+    }
+    return null;
+}   

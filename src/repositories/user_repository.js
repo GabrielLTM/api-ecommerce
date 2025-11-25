@@ -8,3 +8,10 @@ export const getUser = async (userId) => {
   }
   return null;
 }
+
+export const getAllUsers = async () => {
+  return users.map(user => {
+    const { password, ...userWithoutPassword } = user;
+    return userWithoutPassword;
+  });
+}

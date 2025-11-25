@@ -6,7 +6,7 @@ import {
     findClientByCpf,
     updateClient as updateClientRepository,
     deleteClient as deleteClientRepository
-} from "../repository/ClientRepository.js";
+} from "../repositories/client_repository.js";
 
 class ClientError extends Error {
     constructor(message, status) {

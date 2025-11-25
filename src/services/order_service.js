@@ -2,9 +2,10 @@ import {
     saveOrder,
     findAllOrders,
     findOrderById,
-    updateOrderStatus as updateOrderStatusRepository
-} from "../repository/OrderRepository.js";
-import { findProductById } from "../repository/ProductRepository.js";
+    updateOrderStatus as updateOrderStatusRepository,
+    deleteOrder
+} from "../repositories/order_repository.js";
+import { findProductById } from "../repositories/product_repository.js";
 
 class OrderError extends Error {
     constructor(message, status) {
@@ -68,4 +69,15 @@ export const updateOrderStatus = async (id, status) => {
     }
 
     return await updateOrderStatusRepository(id, status);
+}
+
+export const deleterOrderById = async (id) => {
+    if (id == null || id == 0) {
+        throw new OrderError('Invalid order ID', 400);
+    }
+    const existingOrder = await findOrderById(id);
+    if (!existingOrder) {
+        throw new OrderError('Order not found', 404);
+    }
+    return await deleteOrder(id);
 }

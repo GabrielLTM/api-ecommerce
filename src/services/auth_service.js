@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import { findUserByEmail, createUser } from '../repository/AuthRepository.js';
+import { findUserByEmail, createUser } from '../repositories/auth_repository.js';
 
 class AuthError extends Error {
   constructor(message, status) {
