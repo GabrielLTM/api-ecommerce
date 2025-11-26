@@ -27,6 +27,7 @@ export const create = async (product) => {
     if (!brand) {
         throw new ProductError('Brand not found for the given brandId', 400);
     }
+    product.estoque = 0;
     const newProduct = await saveProduct(product);
     return newProduct;
 }
