@@ -1,40 +1,47 @@
-import { brands } from '../database/index.js';
-
-let idCounter = 1;
+import prisma from '../database/prisma.js';
 
 export const saveBrand = async (name, urlLogo) => {
-    const newBrand = { id: (idCounter++).toString(), name, urlLogo };
-    brands.push(newBrand);
-    return newBrand;
+    return await prisma.brand.create({
+        data: {
+            name,
+            urlLogo,
+        },
+    });
 }
 
 export const findBrandById = async (id) => {
-    console.log("Finding brand by ID: ", id);
-    return brands.find(brand => brand.id === id);
+    return await prisma.brand.findUnique({
+        where: {
+            id,
+        },
+    });
 }
 
 export const findAllBrands = async () => {
-    return brands;
+    return await prisma.brand.findMany();
 }
 
 export const findBrandByName = async (name) => {
-    return brands.find(brand => brand.name === name);
+    return await prisma.brand.findUnique({
+        where: {
+            name,
+        },
+    });
 }
  
 export const updateBrandById = async (id, brand) => {
-    const index = brands.findIndex(b => b.id === id);
-    if (index !== -1) {
-        brands[index] = { ...brands[index], ...brand };
-        return brands[index];
-    }
-    return null;
+    return await prisma.brand.update({
+        where: {
+            id,
+        },
+        data: brand,
+    });
 }
 
 export const deleteBrandById = async (id) => {
-    const index = brands.findIndex(b => b.id === id);
-    if (index !== -1) {
-        const deletedBrand = brands.splice(index, 1);
-        return deletedBrand[0];
-    }
-    return null;
-}   
+    return await prisma.brand.delete({
+        where: {
+            id,
+        },
+    });
+}

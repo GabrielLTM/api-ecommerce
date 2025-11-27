@@ -1,36 +1,36 @@
-// src/repositories/fornecedor_repository.js
-let fornecedores = [];
-let autoIncrement = 1;
+import prisma from '../database/prisma.js';
 
-export function listar() {
-    return Promise.resolve(fornecedores);
+export async function listar() {
+    return await prisma.fornecedor.findMany();
 }
 
-export function inserir(fornecedor) {
-    fornecedor.id = autoIncrement++;
-    fornecedores.push(fornecedor);
-    return Promise.resolve(fornecedor);
+export async function inserir(fornecedor) {
+    return await prisma.fornecedor.create({
+        data: fornecedor,
+    });
 }
 
-export function buscarPorId(id) {
-    const fornecedor = fornecedores.find(f => f.id == id);
-    return Promise.resolve(fornecedor);
+export async function buscarPorId(id) {
+    return await prisma.fornecedor.findUnique({
+        where: {
+            id,
+        },
+    });
 }
 
-export function atualizar(id, fornecedor) {
-    const index = fornecedores.findIndex(f => f.id == id);
-    if (index === -1) {
-        return Promise.resolve(null);
-    }
-    fornecedores[index] = { ...fornecedores[index], ...fornecedor, id: parseInt(id) };
-    return Promise.resolve(fornecedores[index]);
+export async function atualizar(id, fornecedor) {
+    return await prisma.fornecedor.update({
+        where: {
+            id,
+        },
+        data: fornecedor,
+    });
 }
 
-export function deletar(id) {
-    const index = fornecedores.findIndex(f => f.id == id);
-    if (index === -1) {
-        return Promise.resolve(null);
-    }
-    const [deleted] = fornecedores.splice(index, 1);
-    return Promise.resolve(deleted);
+export async function deletar(id) {
+    return await prisma.fornecedor.delete({
+        where: {
+            id,
+        },
+    });
 }

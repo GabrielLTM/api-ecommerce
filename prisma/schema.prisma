@@ -1,0 +1,91 @@
+generator client {
+    provider = "prisma-client-js"
+}
+
+
+datasource db {
+  provider = "mongodb"
+  url = env("MONGO_URI")
+}
+
+model User {
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  name     String
+  email    String @unique
+  password String
+  role     String @default("user")
+}
+
+model Client {
+  id    String @id @default(auto()) @map("_id") @db.ObjectId
+  name  String
+  email String @unique
+  cpf   String @unique
+  phone String
+  Order Order[]
+}
+
+model Brand {
+  id      String    @id @default(auto()) @map("_id") @db.ObjectId
+  name    String    @unique
+  urlLogo String?
+  Product Product[]
+}
+
+model Fornecedor {
+  id     String   @id @default(auto()) @map("_id") @db.ObjectId
+  name   String
+  cnpj   String   @unique
+  email  String   @unique
+  phone  String
+  Compra Compra[]
+}
+
+model Product {
+  id         String       @id @default(auto()) @map("_id") @db.ObjectId
+  name       String       @unique
+  price      Float
+  category   String
+  estoque    Int          @default(0)
+  brand      Brand        @relation(fields: [brandId], references: [id])
+  brandId    String       @db.ObjectId
+  OrderItem  OrderItem[]
+  CompraItem CompraItem[]
+}
+
+model Compra {
+  id                 String       @id @default(auto()) @map("_id") @db.ObjectId
+  dataHora           DateTime     @default(now())
+  fornecedor         Fornecedor   @relation(fields: [fornecedorId], references: [id])
+  fornecedorId       String       @db.ObjectId
+  itens              CompraItem[]
+  produtosDiferentes Int
+}
+
+model CompraItem {
+  id         String  @id @default(auto()) @map("_id") @db.ObjectId
+  compra     Compra  @relation(fields: [compraId], references: [id])
+  compraId   String  @db.ObjectId
+  produto    Product @relation(fields: [produtoId], references: [id])
+  produtoId  String  @db.ObjectId
+  quantidade Int
+}
+
+model Order {
+  id            String      @id @default(auto()) @map("_id") @db.ObjectId
+  client        Client      @relation(fields: [clientId], references: [id])
+  clientId      String      @db.ObjectId
+  paymentMethod String
+  status        String      @default("PENDING")
+  createdAt     DateTime    @default(now())
+  items         OrderItem[]
+}
+
+model OrderItem {
+  id        String  @id @default(auto()) @map("_id") @db.ObjectId
+  order     Order   @relation(fields: [orderId], references: [id])
+  orderId   String  @db.ObjectId
+  product   Product @relation(fields: [productId], references: [id])
+  productId String  @db.ObjectId
+  quantity  Int
+}

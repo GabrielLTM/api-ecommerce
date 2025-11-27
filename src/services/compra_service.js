@@ -1,5 +1,5 @@
 import * as compraRepository from '../repositories/compra_repository.js';
-import * as produtoRepository from '../repositories/produto_repository.js';
+import * as productRepository from '../repositories/product_repository.js';
 import * as fornecedorRepository from '../repositories/fornecedor_repository.js';
 
 export async function listar() {
@@ -24,14 +24,14 @@ export async function inserir(compra) {
     // Usamos Promise.all para processar todos os itens em paralelo (Aula 05/06)
     const promisesItens = compra.itens.map(async (item) => {
         // Busca o produto no nosso estoque
-        const produto = await produtoRepository.buscarPorId(item.produtoId);
+        const produto = await productRepository.findProductById(item.produtoId);
         if (!produto) {
             throw { id: 404, msg: `Produto com ID ${item.produtoId} não encontrado` };
         }
 
-        // RN 1: Atualizar o estoque
-        produto.estoque += item.quantidade;
-        await produtoRepository.atualizar(produto.id, produto);
+        await productRepository.updateProduct(produto.id, {
+        estoque: produto.estoque + item.quantidade
+        });
 
         // RN 2: Calcular "produtos diferentes"
         // Compara o 'fornecedorPadrao' do produto (ID) com o 'fornecedorId' da compra (ID)

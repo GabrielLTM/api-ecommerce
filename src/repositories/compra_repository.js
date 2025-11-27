@@ -1,12 +1,42 @@
-let listaCompras = [];
-let autoIncrement = 1;
+import prisma from '../database/prisma.js';
 
-export function listar() {
-    return Promise.resolve(listaCompras);
+export async function listar() {
+    return await prisma.compra.findMany({
+        include: {
+            itens: {
+                include: {
+                    produto: true,
+                },
+            },
+            fornecedor: true,
+        },
+    });
 }
 
-export function inserir(compra) {
-    compra.id = autoIncrement++;
-    listaCompras.push(compra);
-    return Promise.resolve(compra);
+export async function inserir(compra) {
+    const { fornecedorId, produtosDiferentes, itens } = compra;
+
+    return await prisma.compra.create({
+        data: {
+            fornecedor: {
+                connect: {
+                    id: fornecedorId,
+                },
+            },
+            produtosDiferentes,
+            itens: {
+                create: itens.map((item) => ({
+                    produto: {
+                        connect: {
+                            id: item.produtoId,
+                        },
+                    },
+                    quantidade: item.quantidade,
+                })),
+            },
+        },
+        include: {
+            itens: true,
+        },
+    });
 }

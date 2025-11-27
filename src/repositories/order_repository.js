@@ -1,79 +1,77 @@
-import { orders, orderItems, products, clients } from '../database/index.js';
-
-let orderIdCounter = 1;
-let orderItemIdCounter = 1;
+import prisma from '../database/prisma.js';
 
 export const saveOrder = async (orderData) => {
-    const newOrder = {
-        id: (orderIdCounter++).toString(),
-        clientId: orderData.clientId,
-        paymentMethod: orderData.paymentMethod,
-        status: 'PENDING',
-        createdAt: new Date(),
-        items: [],
-    };
+    const { clientId, paymentMethod, items } = orderData;
 
-    const newOrderItems = orderData.items.map(item => {
-        const newOrderItem = {
-            id: (orderItemIdCounter++).toString(),
-            orderId: newOrder.id,
-            productId: item.productId,
-            quantity: item.quantity,
-        };
-        orderItems.push(newOrderItem);
-        return newOrderItem;
+    return await prisma.order.create({
+        data: {
+            client: {
+                connect: {
+                    id: clientId,
+                },
+            },
+            paymentMethod,
+            items: {
+                create: items.map((item) => ({
+                    product: {
+                        connect: {
+                            id: item.productId,
+                        },
+                    },
+                    quantity: item.quantity,
+                })),
+            },
+        },
+        include: {
+            items: true,
+        },
     });
-
-    newOrder.items = newOrderItems;
-    orders.push(newOrder);
-
-    return newOrder;
 };
 
 export const findAllOrders = async () => {
-    return orders.map(order => ({
-        ...order,
-        items: order.items.map(item => ({
-            ...item,
-            product: products.find(p => p.id === item.productId),
-        })),
-        client: clients.find(c => c.id === order.clientId),
-    }));
+    return await prisma.order.findMany({
+        include: {
+            items: {
+                include: {
+                    product: true,
+                },
+            },
+            client: true,
+        },
+    });
 }
 
 export const findOrderById = async (id) => {
-    const order = orders.find(o => o.id === id);
-    if (!order) return null;
-
-    return {
-        ...order,
-        items: order.items.map(item => ({
-            ...item,
-            product: products.find(p => p.id === item.productId),
-        })),
-        client: clients.find(c => c.id === order.clientId),
-    };
+    return await prisma.order.findUnique({
+        where: {
+            id,
+        },
+        include: {
+            items: {
+                include: {
+                    product: true,
+                },
+            },
+            client: true,
+        },
+    });
 }
 
 export const updateOrderStatus = async (id, status) => {
-    const index = orders.findIndex(o => o.id === id);
-    if (index !== -1) {
-        orders[index].status = status;
-        return orders[index];
-    }
-    return null;
+    return await prisma.order.update({
+        where: {
+            id,
+        },
+        data: {
+            status,
+        },
+    });
 }
 
 export const deleteOrder = async (id) => {
-    const index = orders.findIndex(o => o.id === id);
-    if (index !== -1) {
-        const deletedOrder = orders.splice(index, 1);
-        for (let i = orderItems.length - 1; i >= 0; i--) {
-            if (orderItems[i].orderId === id) {
-                orderItems.splice(i, 1);
-            }
-        }
-        return deletedOrder[0];
-    }
-    return null;
-}   
+    return await prisma.order.delete({
+        where: {
+            id,
+        },
+    });
+}
