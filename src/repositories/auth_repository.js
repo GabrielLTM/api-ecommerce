@@ -1,25 +1,9 @@
-import { users } from '../database/index.js';
-
-let idCounter = users.length > 0 ? Math.max(...users.map(u => parseInt(u.id))) + 1 : 1;
-
-class CustomError extends Error {
-  constructor(message, status) {
-    super(message);
-    this.status = status;
-  }
-}
+import { findUserByEmail as findUserByEmailRepo, createUser as createUserRepo } from './user_repository.js';
 
 export const findUserByEmail = async (email) => {
-  return users.find(user => user.email === email);
+  return await findUserByEmailRepo(email);
 };
 
 export const createUser = async (name, email, password) => {
-  if (users.some(user => user.email === email)) {
-    throw new CustomError('Email already exists', 409);
-  }
-  const newId = idCounter;
-  idCounter++;
-  const newUser = { id: newId.toString(), name, email, password };
-  users.push(newUser);
-  return newUser;
+  return await createUserRepo({ name, email, password });
 };

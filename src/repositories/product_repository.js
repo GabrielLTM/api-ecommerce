@@ -1,39 +1,55 @@
-import { products } from '../database/index.js';
-
-let idCounter = 1;
+import prisma from '../database/prisma.js';
 
 export const findProductById = async (id) => {
-    return products.find(product => product.id === id);
+    return await prisma.product.findUnique({
+        where: {
+            id,
+        },
+    });
 }
 
 export const findProductByName = async (name) => {
-    return products.find(product => product.name === name);
+    return await prisma.product.findUnique({
+        where: {
+            name,
+        },
+    });
 }
 
 export const findAllProducts = async () => {
-    return products;
+    return await prisma.product.findMany();
 }
 
 export const saveProduct = async (product) => {
-    const newProduct = { ...product, id: (idCounter++).toString() };
-    products.push(newProduct);
-    return newProduct;
+    const { name, price, category, estoque, brandId } = product;
+    return await prisma.product.create({
+        data: {
+            name,
+            price,
+            category,
+            estoque,
+            brand: {
+                connect: {
+                    id: brandId,
+                },
+            },
+        },
+    });
 }
 
 export const updateProduct = async (id, product) => {
-    const index = products.findIndex(p => p.id === id);
-    if (index !== -1) {
-        products[index] = { ...products[index], ...product };
-        return products[index];
-    }
-    return null;
+    return await prisma.product.update({
+        where: {
+            id,
+        },
+        data: product,
+    });
 }
 
 export const deleteProduct = async (id) => {
-    const index = products.findIndex(p => p.id === id);
-    if (index !== -1) {
-        const deletedProduct = products.splice(index, 1);
-        return deletedProduct[0];
-    }
-    return null;
+    return await prisma.product.delete({
+        where: {
+            id,
+        },
+    });
 }

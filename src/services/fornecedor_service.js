@@ -6,7 +6,7 @@ export async function listar() {
 
 export async function inserir(fornecedor) {
     // RN: Validar campos obrigatórios
-    if (!fornecedor || !fornecedor.nome || !fornecedor.cnpj || !fornecedor.email) {
+    if (!fornecedor || !fornecedor.name || !fornecedor.cnpj || !fornecedor.email) {
         throw { id: 400, msg: "Dados do fornecedor incompletos (nome, cnpj, email são obrigatórios)" };
     }
     
