@@ -17,32 +17,48 @@ export const findProductByName = async (name) => {
 }
 
 export const findAllProducts = async () => {
-    return await prisma.product.findMany();
+    return await prisma.product.findMany(
+    //     {
+    //     include: {
+    //         brand: true,
+    //         category: true
+    //     }
+    // }
+);
 }
 
 export const saveProduct = async (product) => {
-    const { name, price, category, estoque, brandId } = product;
+    const { name, price, description, categoryId, estoque, brandId } = product;
+    console.log(estoque + " estoque");
+    console.log(description + " description");
     return await prisma.product.create({
         data: {
             name,
             price,
-            category,
+            description,
             estoque,
-            brand: {
-                connect: {
-                    id: brandId,
-                },
-            },
+            categoryId,
+            brandId
         },
     });
 }
 
 export const updateProduct = async (id, product) => {
+    const { name, price, description, categoryId, estoque, brandId } = product;
+    console.log(estoque + " estoque");
+    console.log(description + " description");
     return await prisma.product.update({
         where: {
             id,
         },
-        data: product,
+        data: {
+            name,
+            price,
+            description,
+            estoque,
+            categoryId,
+            brandId
+        },
     });
 }
 

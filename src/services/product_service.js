@@ -9,6 +9,7 @@ import {
 
 import { findBrandById } from "../repositories/brand_repository.js";
 import { buscarPorId as findFornecedorById } from "../repositories/fornecedor_repository.js";
+import { findCategoryById } from "../repositories/category_repository.js";
 
 class ProductError extends Error {
     constructor(message, status) {
@@ -27,12 +28,16 @@ export const create = async (product) => {
     if (!brand) {
         throw new ProductError('Brand not found for the given brandId', 400);
     }
+    const category = await findCategoryById(product.categoryId);
+    if (!brand) {
+        throw new ProductError('Category not found for the given categoryId', 400);
+    }
     const newProduct = await saveProduct(product);
     return newProduct;
 }
 
-export const getAllProducts = async () => {
-    return await findAllProducts();
+export const getAllProducts = async (categoryId) => {
+    return await findAllProducts(categoryId);
 }
 
 export const getProductById = async (id) => {

@@ -8,11 +8,13 @@ import {
 
 export const createProduct = async (req, res) => {
     try {
-        const { name, price, category, brandId } = req.body;
-        if (!name || !price || !category || !brandId) {
-            return res.status(400).json({ message: "The fields 'name', 'price', 'category' and 'brandId' are mandatory." });
+        const { name, price, description, estoque, categoryId, brandId } = req.body;
+        console.log(req.body + " body");
+        console.log(name, price, categoryId, brandId + " values");
+        if (!name || !price || !categoryId || !brandId) {
+            return res.status(400).json({ message: "The fields 'name', 'price', 'categoryId' and 'brandId' are mandatory." });
         }
-        const product = { name, price, category, brandId };
+        const product = { name, price, description, estoque, categoryId, brandId };
         const newProduct = await createProductService(product);
         res.status(201).json(newProduct);
     } catch (err) {
@@ -45,8 +47,8 @@ export const getProduct = async (req, res) => {
 export const updateProduct = async (req, res) => {
     const { id } = req.params;
     try {
-        const { name, price, category, brandId } = req.body;
-        const product = { name, price, category, brandId };
+        const { name, price, description, estoque, categoryId, brandId } = req.body;
+        const product = { name, price, description, estoque, categoryId, brandId };
         const updatedProduct = await updateProductService(id, product);
         res.status(200).json(updatedProduct);
     } catch (err) {
