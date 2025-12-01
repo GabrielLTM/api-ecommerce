@@ -8,6 +8,8 @@ import clientRoutes from './routes/client_routes.js';
 import orderRoutes from './routes/order_routes.js';
 import fornecedorRoutes from './routes/fornecedor_routes.js';
 import compraRoutes from './routes/compra_routes.js';
+import categoryRoutes from './routes/category_routes.js';
+import cartRoutes from './routes/cart_routes.js';
 
 const app = express();
 app.use(express.json());
@@ -20,6 +22,8 @@ app.use('/api/clients', clientRoutes);
 app.use('/api/orders', orderRoutes);
 app.use('/api/fornecedores', fornecedorRoutes);
 app.use('/api/compras', compraRoutes);
+app.use('/api/categories', categoryRoutes);
+app.use('/api/carts', cartRoutes);
 
 app.use((error, req, res, next) => {
     if (error.id && error.msg) {
