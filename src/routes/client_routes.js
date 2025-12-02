@@ -72,8 +72,8 @@ const router = Router();
  *               address:
  *                 type: string
  *                 example: "456 Oak St"
- *              cpf:   
- *                  type: string
+ *               cpf:
+ *                 type: string
  *                 example: "123.456.789-00"
  *     responses:
  *       201:
@@ -176,8 +176,8 @@ router.get('/:id', authMiddleware, getClientById);
  *               address:
  *                 type: string
  *                 example: "789 Pine St"
- *              cpf:
- *                  type: string
+ *               cpf:
+ *                 type: string
  *                 example: "987.654.321-00"
  *     responses:
  *       200:

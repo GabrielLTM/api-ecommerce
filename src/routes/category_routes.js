@@ -57,8 +57,8 @@ const router = Router();
  *               name:
  *                 type: string
  *                 example: "Books"
- *              description:   
- *                  type: string
+ *               description:
+ *                 type: string
  *                 example: "All kinds of books"
  *     responses:
  *       201:
