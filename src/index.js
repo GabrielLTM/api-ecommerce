@@ -10,9 +10,11 @@ import fornecedorRoutes from './routes/fornecedor_routes.js';
 import compraRoutes from './routes/compra_routes.js';
 import categoryRoutes from './routes/category_routes.js';
 import cartRoutes from './routes/cart_routes.js';
+import setupSwagger from './swagger.js';
 
 const app = express();
 app.use(express.json());
+setupSwagger(app);
 
 app.use('/auth', authRoutes);
 app.use('/users', userRoutes);
