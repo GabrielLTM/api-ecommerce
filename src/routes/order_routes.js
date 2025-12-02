@@ -63,7 +63,7 @@ const router = Router();
  *       properties:
  *         status:
  *           type: string
- *           enum: [PENDING, PROCESSING, SHIPPED, DELIVERED, CANCELED]
+ *           enum: [PAID, CANCELED, COMPLETED]
  *           example: "PROCESSING"
  */
 

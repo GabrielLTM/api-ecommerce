@@ -21,6 +21,7 @@ model Client {
   email String  @unique
   cpf   String  @unique
   phone String
+  address String
   Order Order[]
 }
 

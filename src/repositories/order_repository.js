@@ -23,10 +23,16 @@ export const saveOrder = async (orderData) => {
             },
         },
         include: {
-            items: true,
+            items: {
+                include: {
+                    product: true,
+                },
+            },
+            client: true,
         },
     });
 };
+
 
 export const findAllOrders = async () => {
     return await prisma.order.findMany({

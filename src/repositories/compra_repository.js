@@ -36,7 +36,12 @@ export async function inserir(compra) {
             },
         },
         include: {
-            itens: true,
+            itens: {
+                include: {
+                    produto: true,
+                },
+            },
+            fornecedor: true,
         },
     });
 }
