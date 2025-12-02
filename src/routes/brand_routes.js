@@ -50,9 +50,9 @@ const router = Router();
  *               name:
  *                 type: string
  *                 example: "Adidas"
-*                urlLogo:
-*                   type: string
-*                   example: "Adidas.png"
+ *               urlLogo:
+ *                 type: string
+ *                 example: "Adidas.png"
  *     responses:
  *       201:
  *         description: Brand created successfully
