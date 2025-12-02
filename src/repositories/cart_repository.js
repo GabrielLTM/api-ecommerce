@@ -12,7 +12,12 @@ export const findCartById = async (id) => {
         include: {
             items: {
                 include: {
-                    product: true,
+                    product: {
+                        include: {
+                            brand: true,
+                            category: true,
+                        }
+                    },
                 },
             },
         },
