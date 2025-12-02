@@ -26,7 +26,7 @@ const router = Router();
  *         id:
  *           type: string
  *           example: "692dbed046fc962004695f09"
- *         clientId:
+ *         clientName:
  *           type: string
  *           example: "692dbed046fc962004695f09"
  *         items:

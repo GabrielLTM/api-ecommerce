@@ -34,10 +34,10 @@ const router = Router();
  *         email:
  *           type: string
  *           example: "john.doe@example.com"
- *         telefone:
+ *         phone:
  *           type: string
  *           example: "123456789"
- *         endereco:
+ *         address:
  *           type: string
  *           example: "123 Main St"
  */
@@ -66,12 +66,15 @@ const router = Router();
  *               email:
  *                 type: string
  *                 example: "jane.doe@example.com"
- *               telefone:
+ *               phone:
  *                 type: string
  *                 example: "987654321"
- *               endereco:
+ *               address:
  *                 type: string
  *                 example: "456 Oak St"
+ *              cpf:   
+ *                  type: string
+ *                 example: "123.456.789-00"
  *     responses:
  *       201:
  *         description: Client created successfully
@@ -167,12 +170,15 @@ router.get('/:id', authMiddleware, getClientById);
  *               email:
  *                 type: string
  *                 example: "john.smith@example.com"
- *               telefone:
+ *               phone:
  *                 type: string
  *                 example: "111222333"
- *               endereco:
+ *               address:
  *                 type: string
  *                 example: "789 Pine St"
+ *              cpf:
+ *                  type: string
+ *                 example: "987.654.321-00"
  *     responses:
  *       200:
  *         description: Client updated successfully
